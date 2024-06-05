@@ -4,26 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Website</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <title>PIU scripts</title>
   </head>
   <body>
     <main>
         <h1>Coleta de scores recentes piugame</h1>
         <ul>
           <li>Copie o codigo abaixo</li>
-          <li>Crie um novo favorito, e na URL, cole o codigo</li>
+	  <li><pre>javascript:(function(d,s){s=d.createElement('script');s.type='text/javascript';s.src='https://joaopslins.github.io/getrecentscores.js';d.head.appendChild(s);})(document);</pre></li>
+          <li>Crie um novo favorito no Chrome, e na URL, cole o codigo</li>
           <li>Abra a pagina <a href="https://www.piugame.com/my_page/recently_played.php" target="_blank">https://www.piugame.com/my_page/recently_played.php</a></li>
           <li>Clique no favorito. Voce ira baixar um arquivo .csv</li>
           <li>Abra o arquivo em um editor de texto, como bloco de notas, e copie todo o conteudo (Ctrl + A e Ctrl + C)</li>
           <li>Va em um google sheets, clique em uma celula, cole o conteudo</li>
           <li>Logo apos colar, va em Dados > Dividir texto em colunas</li>
         </ul>
-        <pre>
-          javascript:(function(d,s){s=d.createElement('script');s.type='text/javascript';s.src='https://joaopslins.github.io/getrecentscores.js';d.head.appendChild(s);})(document);
-        </pre>
     </main>
-	<script src="index.js"></script>
   </body>
 </html>
