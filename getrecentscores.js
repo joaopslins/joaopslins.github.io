@@ -60,6 +60,10 @@
 
       if (plate == undefined) throw new Error('Plate not found.');
 
+      const [perfect, great, good, bad, miss] = Array.from(
+        scoreElement.querySelectorAll('table .tx')
+      ).map((el) => el.textContent.replace(',', ''))
+
       // Add to scores array
       scores.push({
         type,
@@ -68,12 +72,17 @@
         score,
         grade,
         plate,
+        perfect,
+        great,
+        good,
+        bad,
+        miss
       });
   })
 
-  csvString += 'Musica, Tipo, Level, Score, Grade, Plate\r\n'
+  csvString += 'Musica, Tipo, Level, Score, Grade, Plate, Perfect, Great, Good, Bad, Miss\r\n'
   scores.forEach(score => {
-    csvString += `${score.name},${score.type},${score.level},${score.score},${score.grade},${score.plate}\r\n`
+    csvString += `${score.name},${score.type},${score.level},${score.score},${score.grade},${score.plate},${score.perfect},${score.great},${score.good},${score.bad},${score.miss}\r\n`
   }) 
   const encodedUri = encodeURI(csvString)
   window.open(encodedUri)
