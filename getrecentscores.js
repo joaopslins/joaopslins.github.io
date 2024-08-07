@@ -11,7 +11,9 @@
         ? 'single'
         : typeUrl?.includes('d_text')
           ? 'double'
-          : 'ERROR';
+          : typeUrl?.includes('c_text')
+            ? 'co-op'
+            : 'ERROR';
 
       if (type === 'ERROR') throw new Error('Type element not found.');
 
@@ -26,9 +28,11 @@
 
       const firstDigitLevel = levelNums?.[0];
       const secondDigitLevel = levelNums?.[1];
-      if (firstDigitLevel == undefined || secondDigitLevel == undefined) throw new Error('Level number not found.');
+      if (type !== 'co-op' && (firstDigitLevel == undefined || secondDigitLevel == undefined)) {
+        throw new Error('Level number not found.');
+      }
 
-      const level = Number(`${firstDigitLevel}${secondDigitLevel}`);
+      const level = Number(`${firstDigitLevel ?? ''}${secondDigitLevel}`);
 
       // Get song name
       const name = scoreElement.querySelector('.song_name p')?.textContent;
@@ -64,6 +68,10 @@
         scoreElement.querySelectorAll('table .tx')
       ).map((el) => el.textContent.replace(',', ''))
 
+      const dateStr = scoreElement.querySelector('.recently_date_tt').textContent.replace(' (GMT+9)', '+09:00')
+      const date = new Date(dateStr).toLocaleDateString()
+      const time = new Date(dateStr).toLocaleTimeString()
+
       // Add to scores array
       scores.push({
         type,
@@ -76,13 +84,15 @@
         great,
         good,
         bad,
-        miss
+        miss,
+        date,
+        time
       });
   })
 
-  csvString += 'Musica, Tipo, Level, Score, Grade, Plate, Perfect, Great, Good, Bad, Miss\r\n'
+  csvString += 'Musica, Tipo, Level, Score, Grade, Plate, Perfect, Great, Good, Bad, Miss, Data, Hora\r\n'
   scores.forEach(score => {
-    csvString += `${score.name},${score.type},${score.level},${score.score},${score.grade},${score.plate},${score.perfect},${score.great},${score.good},${score.bad},${score.miss}\r\n`
+    csvString += `${score.name.replace(',', '')},${score.type},${score.level},${score.score},${score.grade},${score.plate},${score.perfect},${score.great},${score.good},${score.bad},${score.miss},${score.date}, ${score.time}\r\n`
   }) 
   const encodedUri = encodeURI(csvString)
   window.open(encodedUri)
